@@ -1,0 +1,17 @@
+GET http://localhost:5000/persons/6164200b95e57fb73776dd08
+
+###
+
+DELETE http://localhost:5000/persons/6164206ef4f8f2731feaa2dc
+
+###
+
+GET http://localhost:5000/scores/
+
+###
+
+GET http://localhost:5000/scores/page/4
+
+###
+
+GET http://localhost:5000/scores?page=4

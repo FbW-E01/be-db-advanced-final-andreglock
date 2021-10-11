@@ -1,11 +1,43 @@
 import express from 'express';
 import { Score } from '../models/score.js';
+import querystring from 'querystring';
 const router = express.Router();
 
-// Get all scores (VERY HEAVY)
+// Get 10 scores or Get a given page with query string parameter
 router.get("/", async (req,res,next) => {
+    if (req.query.page) {
+        try {
+            const scoresQuery = Score.find();
+            scoresQuery.select('total');
+            scoresQuery.sort({ total: 'asc' });
+            scoresQuery.skip(req.query.page * 10).limit(10);
+            const scores = await scoresQuery.exec()
+            res.send(scores);
+        } catch (error) {
+            next(error);
+        }
+    } else {
+        try {
+            const scoresQuery = Score.find();
+            scoresQuery.select('total');
+            scoresQuery.sort({ total: 'asc' });
+            scoresQuery.limit(10);
+            const scores = await scoresQuery.exec()
+            res.send(scores);
+        } catch (error) {
+            next(error);
+        }
+    }
+});
+
+// Get a given page
+router.get("/page/:nbr", async (req,res,next) => {
     try {
-        const scores = await Score.find();
+        const scoresQuery = Score.find();
+        scoresQuery.select('total');
+        scoresQuery.sort({ total: 'asc' });
+        scoresQuery.skip(req.params.nbr * 10).limit(10);
+        const scores = await scoresQuery.exec()
         res.send(scores);
     } catch (error) {
         next(error);
