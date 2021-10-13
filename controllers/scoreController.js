@@ -1,6 +1,5 @@
 import express from 'express';
 import { Score } from '../models/score.js';
-import querystring from 'querystring';
 const router = express.Router();
 
 // Get 10 scores or Get a given page with query string parameter
